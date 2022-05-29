@@ -108,4 +108,10 @@ public class Order {
         System.out.println("Total cost: " + this.totalCost());
         System.out.println("***************************************************");
     }
+
+    public DigitalVideoDisc getALuckyItem() {
+        DigitalVideoDisc dvd = this.itemsOrdered[(int)(Math.random() * this.qtyOrdered)];
+        dvd.setCost(0);
+        return dvd;
+    }
 }
