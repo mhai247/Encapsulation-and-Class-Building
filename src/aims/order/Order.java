@@ -1,16 +1,17 @@
 package aims.order;
 
 import java.time.LocalDate;
-//import aims.disc/aims.disc.DigitalVideoDisc.java;
-import aims.disc.DigitalVideoDisc;
+import java.util.ArrayList;
+//import aims.disc/aims.media.DigitalVideoDisc.java;
+import aims.media.DigitalVideoDisc;
+import aims.media.Media;
 
 public class Order {
     public static final int MAX_NUMBERS_ORDERED = 10;
     public static final int MAX_LIMITED_ORDERS = 5;
 
     private static int nbOrders = 0;
-    private DigitalVideoDisc[] itemsOrdered = new DigitalVideoDisc[MAX_NUMBERS_ORDERED];
-    private int qtyOrdered = 0;
+    private ArrayList<Media> itemsOrdered = new ArrayList<Media>();
     private LocalDate dateOrdered;
 
     public Order() {
@@ -20,98 +21,43 @@ public class Order {
         nbOrders++;
     }
 
-    public void addDigitalVideoDisc(DigitalVideoDisc disc){
-        if (qtyOrdered < 10) {
-            itemsOrdered[qtyOrdered] = disc;
-            qtyOrdered++;
-            System.out.println("The aims.disc has been added");
-        }
-        else System.out.println("The aims.order is already full");
+    public void addMedia(Media item){
+        this.itemsOrdered.add(item);
+        System.out.println("The item has been added");
     }
 
-    public void addDigitalVideoDisc(DigitalVideoDisc... dvdLst) {
-        int len = dvdLst.length, i;
-        for (i = 0; i < len; ++i) {
-            itemsOrdered[qtyOrdered] = dvdLst[i];
-            qtyOrdered++;
-            if (qtyOrdered == 10)
-                break;
-        }
-        if (i != len){
-            System.out.println("Full aims.order list!!");
-            System.out.println("Unsuccessful items:");
-            for (; i < len; ++i){
-                System.out.println(dvdLst[i].getTitle());
-            }
+    public void removeMedia(Media item) {
+        if (this.itemsOrdered.indexOf(item) != -1)
+        {
+            this.itemsOrdered.remove(item);
+            System.out.println("The item has been removed");
         }
         else
-            System.out.println("Successful");
-    }
-
-    public void addDigitalVideoDisc(DigitalVideoDisc dvd1, DigitalVideoDisc dvd2) {
-        if (qtyOrdered < 10) {
-            itemsOrdered[qtyOrdered] = dvd1;
-            qtyOrdered++;
-            System.out.print(dvd1.getTitle());
-            System.out.println(" has been added");
-        }
-        else{
-            System.out.println("The aims.order is already full");
-            System.out.println("Unsuccessful items:");
-            System.out.println(dvd1.getTitle());
-            System.out.println(dvd2.getTitle());
-            return;
-        }
-        if (qtyOrdered < 10) {
-            itemsOrdered[qtyOrdered] = dvd2;
-            qtyOrdered++;
-            System.out.print(dvd2.getTitle());
-            System.out.println(" has been added");
-        }
-        else{
-            System.out.println("The aims.order is already full");
-            System.out.println("Unsuccessful items:");
-            System.out.println(dvd2.getTitle());
-        }
-    }
-
-    public void removeDigitalVideoDisc(DigitalVideoDisc disc) {
-        int i;
-        for (i = 0; i < qtyOrdered; ++i)
-            if (itemsOrdered[i] == disc) {
-                for (int j = i + 1; j < qtyOrdered; ++j)
-                    itemsOrdered[j - 1] = itemsOrdered[j];
-                qtyOrdered--;
-                System.out.println("The aims.disc has been removed");
-            }
-        if (i == qtyOrdered)
-            System.out.println("Not found in aims.order");
+            System.out.println("Item not exist");
     }
 
     public float totalCost() {
         float sum = 0;
-        for (int i = 0; i < qtyOrdered; ++i)
-            sum += itemsOrdered[i].getCost();
+        for (int i = 0; i < this.itemsOrdered.size(); ++i)
+            sum += this.itemsOrdered.get(i).getCost();
         return sum;
     }
 
     public void printOrder() {
-        System.out.println("***********************aims.order.Order***********************");
+        System.out.println("***********************Order***********************");
         System.out.println("Date: " + this.dateOrdered);
         System.out.println("Ordered items:");
-        for (int i = 0; i < this.qtyOrdered; ++i)
-            System.out.println(i + ". DVD - " + this.itemsOrdered[i].getTitle()
-            + " - " + this.itemsOrdered[i].getCategory()
-            + " - " + this.itemsOrdered[i].getDirector()
-            + " - " + this.itemsOrdered[i].getLength()
-            + ": " + this.itemsOrdered[i].getCost() + "$");
+        for (int i = 0; i < this.itemsOrdered.size(); ++i)
+            System.out.println(i + ". " + this.itemsOrdered.get(i).getTitle()
+            + " - " + this.itemsOrdered.get(i).getCategory()
+            + ": " + this.itemsOrdered.get(i).getCost() + "$");
         System.out.println("Total cost: " + this.totalCost());
         System.out.println("***************************************************");
     }
 
-    public DigitalVideoDisc getALuckyItem() {
-        DigitalVideoDisc dvd = this.itemsOrdered[(int)(Math.random() * this.qtyOrdered)];
-        dvd.setCost(0);
-        return dvd;
-    }
+//    public DigitalVideoDisc getALuckyItem() {
+//        DigitalVideoDisc dvd = this.itemsOrdered[(int)(Math.random() * this.qtyOrdered)];
+//        dvd.setCost(0);
+//        return dvd;
+//    }
 }

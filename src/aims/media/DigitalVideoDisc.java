@@ -1,27 +1,8 @@
-package aims.disc;
+package aims.media;
 
-public class DigitalVideoDisc {
-    private String title;
-    private String category;
+public class DigitalVideoDisc extends Media {
     private String director;
     private int length;
-    private float cost;
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
 
     public String getDirector() {
         return director;
@@ -39,17 +20,9 @@ public class DigitalVideoDisc {
         this.length = length;
     }
 
-    public float getCost() {
-        return cost;
-    }
-
-    public void setCost(float cost) {
-        this.cost = cost;
-    }
-
     public DigitalVideoDisc(String title) {
         super();
-        this.title = title;
+        this.setTitle(title);
     }
 
     public boolean search(String title) {
